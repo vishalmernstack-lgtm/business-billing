@@ -1,8 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { logout, refreshTokenSuccess } from '../slices/authSlice'
 
+// Debug: Log the environment variable
+console.log('VITE_API_URL:', import.meta.env.VITE_API_URL)
+console.log('All env vars:', import.meta.env)
+
 const baseQuery = fetchBaseQuery({
-  baseUrl: process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:5000/api',
+  baseUrl: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
   timeout: 10000, // 10 second timeout
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.token
